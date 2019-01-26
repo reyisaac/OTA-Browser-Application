@@ -27,10 +27,20 @@
   </mat-form-field>
   <br>
   <mat-form-field class="example-full-width" style="width: 22%; margin-right:15px">
-    <input matInput type="text" placeholder="From:" [(ngModel)]="departure_input">
+    <input matInput type="text" placeholder="Departure:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="departure_input">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="example-full-width" style="width: 22%; margin-right:40px">
-    <input matInput type="text" placeholder="To:" [(ngModel)]="arrival_input">
+    <input matInput type="text" placeholder="To:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="arrival_input">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="example-full-width" style="width: 17%; margin-right:15px">
     <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
