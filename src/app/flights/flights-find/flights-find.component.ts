@@ -24,6 +24,8 @@ export class FlightsFindComponent {
     class_input = '';
     trip_input = '';
 
+    minDate = new Date();
+
     // button will trigger this function
     onFindFlight() {
         this.dep = this.departure_input;

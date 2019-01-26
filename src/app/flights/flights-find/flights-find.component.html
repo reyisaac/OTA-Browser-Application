@@ -33,14 +33,14 @@
     <input matInput type="text" placeholder="To:" [(ngModel)]="arrival_input">
   </mat-form-field>
   <mat-form-field class="example-full-width" style="width: 17%; margin-right:15px">
-    <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [(ngModel)]="departure_date_input">
+    <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
     <mat-datepicker-toggle matSuffix [for]="dep"></mat-datepicker-toggle>
-    <mat-datepicker #dep [startAt]="startDate"></mat-datepicker>
+    <mat-datepicker #dep></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="example-full-width" style="width: 17%">
-    <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [(ngModel)]="arrival_date_input">
+    <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [min]="minDate" [(ngModel)]="arrival_date_input">
     <mat-datepicker-toggle matSuffix [for]="arr"></mat-datepicker-toggle>
-    <mat-datepicker #arr [startAt]="startDate"></mat-datepicker>
+    <mat-datepicker #arr></mat-datepicker>
   </mat-form-field>
   <button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button color="primary" (click)="onFindFlight()">Search Flight</button>
 </mat-card>
