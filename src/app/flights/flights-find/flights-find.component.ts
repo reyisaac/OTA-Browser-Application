@@ -20,7 +20,7 @@ export class FlightsFindComponent implements OnInit {
     dep_date = '';
     arr_date = '';
     class = '';
-    trip = '';
+    trip = 'Round Trip';
     departure_input = '';
     arrival_input = '';
     departure_date_input = '';
@@ -78,5 +78,7 @@ export class FlightsFindComponent implements OnInit {
 
         // make a query next to express
     }
-
+    onChangeTrip() {
+        this.trip = this.trip_input;
+    }
 }
