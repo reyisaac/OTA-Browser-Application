@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { OnDestroy, OnInit } from '@angular/core';
+
+import { FlightList } from '../flight-list.model';
+import { FlightListService } from '../flight-list.service';
 
 @Component({
   selector: 'app-flights-list',
   templateUrl: './flights-list.component.html',
   styleUrls: ['./flights-list.component.css']
 })
-export class FlightsListComponent {
-    // hardcoded data, than get frlights from express
-    flights = [
-        {
-            airline_name: 'Lufthansa',
-            time: '7:35 PM - 5:20 PM',
-            route: 'MIA-HKG',
-            price: '$2,153'
-        },
-        {
-            airline_name: 'American',
-            time: '8:35 PM - 5:20 PM',
-            route: 'MIA-HKG',
-            price: '$1,553'
-        },
-        {
-            airline_name: 'Austrian',
-            time: '10:00 PM - 5:20 PM',
-            route: 'MIA-HKG',
-            price: '$1,253'
-        }
-    ];
+export class FlightsListComponent implements OnInit, OnDestroy {
+    flights: FlightList[] = [];
+    private flightsSub: Subscription;
+
+    constructor(public flightsService: FlightListService) {}
+
+    ngOnInit() {
+      this.flightsService.getFlights();
+      this.flightsSub = this.flightsService.getFlightUpdateListener()
+        .subscribe((flights: FlightList[]) => {
+          this.flights = flights;
+        });
+    }
+
+    ngOnDestroy() {
+      this.flightsSub.unsubscribe();
+    }
 }

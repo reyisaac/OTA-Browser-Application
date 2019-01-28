@@ -1,109 +1,117 @@
-<mat-card class="mat-elevation-z5" *ngIf="trip === 'Round Trip'">
-  <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
-    <mat-select placeholder="Trip" [(ngModel)]="trip_input">
-      <mat-option value="One Way" (click)="onChangeTrip()">
-        One Way
-      </mat-option>
-      <mat-option value="Round Trip" (click)="onChangeTrip()">
-        Round Trip
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
-    <mat-select placeholder="Class" [(ngModel)]="class_input">
-      <mat-option value="Economy">
-        Economy
-      </mat-option>
-      <mat-option value="Business">
-        Business
-      </mat-option>
-      <mat-option value="First Class">
-        First Class
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field class="example-full-width" style="width: 22%; margin-right:15px">
-    <input matInput type="text" placeholder="Departure:" aria-label="Number" [formControl]="myControl"
-      [matAutocomplete]="auto" [(ngModel)]="departure_input">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 22%; margin-right:40px">
-    <input matInput type="text" placeholder="To:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto"
-      [(ngModel)]="arrival_input">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 17%; margin-right:15px">
-    <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
-    <mat-datepicker-toggle matSuffix [for]="dep"></mat-datepicker-toggle>
-    <mat-datepicker #dep></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 17%">
-    <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [min]="minDate" [(ngModel)]="arrival_date_input">
-    <mat-datepicker-toggle matSuffix [for]="arr"></mat-datepicker-toggle>
-    <mat-datepicker #arr></mat-datepicker>
-  </mat-form-field>
-  <button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
-    color="primary" (click)="onFindFlight()">Search Flight</button>
-</mat-card>
+<div *ngIf="search_bar">
+  <mat-card class="mat-elevation-z5" *ngIf="trip === 'Round Trip'">
+    <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
+      <mat-select placeholder="Trip" [(ngModel)]="trip_input">
+        <mat-option value="One Way" (click)="onChangeTrip()">
+          One Way
+        </mat-option>
+        <mat-option value="Round Trip" (click)="onChangeTrip()">
+          Round Trip
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
+      <mat-select placeholder="Class" [(ngModel)]="class_input">
+        <mat-option value="Economy">
+          Economy
+        </mat-option>
+        <mat-option value="Business">
+          Business
+        </mat-option>
+        <mat-option value="First Class">
+          First Class
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" style="width: 22%; margin-right:15px">
+      <input matInput type="text" placeholder="Departure:" aria-label="Number" [formControl]="myControl"
+        [matAutocomplete]="auto" [(ngModel)]="departure_input">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 22%; margin-right:40px">
+      <input matInput type="text" placeholder="To:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto"
+        [(ngModel)]="arrival_input">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 17%; margin-right:15px">
+      <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
+      <mat-datepicker-toggle matSuffix [for]="dep"></mat-datepicker-toggle>
+      <mat-datepicker #dep></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 17%">
+      <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [min]="minDate" [(ngModel)]="arrival_date_input">
+      <mat-datepicker-toggle matSuffix [for]="arr"></mat-datepicker-toggle>
+      <mat-datepicker #arr></mat-datepicker>
+    </mat-form-field>
+    <button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
+      color="primary" (click)="onFindFlight()">Search Flight</button>
+  </mat-card>
 
-<!-- if choosing one way trip -->
-<mat-card class="mat-elevation-z5" *ngIf="trip === 'One Way'">
-  <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
-    <mat-select placeholder="Trip" [(ngModel)]="trip_input">
-      <mat-option value="One Way" (click)="onChangeTrip()">
-        One Way
-      </mat-option>
-      <mat-option value="Round Trip" (click)="onChangeTrip()">
-        Round Trip
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
-    <mat-select placeholder="Class" [(ngModel)]="class_input">
-      <mat-option value="Economy">
-        Economy
-      </mat-option>
-      <mat-option value="Business">
-        Business
-      </mat-option>
-      <mat-option value="First Class">
-        First Class
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field class="example-full-width" style="width: 22%; margin-right:15px">
-    <input matInput type="text" placeholder="Departure:" aria-label="Number" [formControl]="myControl"
-      [matAutocomplete]="auto" [(ngModel)]="departure_input">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 22%; margin-right:40px">
-    <input matInput type="text" placeholder="To:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto"
-      [(ngModel)]="arrival_input">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="example-full-width" style="width: 34%; margin-right:15px">
-    <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
-    <mat-datepicker-toggle matSuffix [for]="dep"></mat-datepicker-toggle>
-    <mat-datepicker #dep></mat-datepicker>
-  </mat-form-field>
-  <button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
-    color="primary" (click)="onFindFlight()">Search Flight</button>
-</mat-card>
+  <!-- if choosing one way trip -->
+  <mat-card class="mat-elevation-z5" *ngIf="trip === 'One Way'">
+    <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
+      <mat-select placeholder="Trip" [(ngModel)]="trip_input">
+        <mat-option value="One Way" (click)="onChangeTrip()">
+          One Way
+        </mat-option>
+        <mat-option value="Round Trip" (click)="onChangeTrip()">
+          Round Trip
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 10%; margin-right:15px">
+      <mat-select placeholder="Class" [(ngModel)]="class_input">
+        <mat-option value="Economy">
+          Economy
+        </mat-option>
+        <mat-option value="Business">
+          Business
+        </mat-option>
+        <mat-option value="First Class">
+          First Class
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" style="width: 22%; margin-right:15px">
+      <input matInput type="text" placeholder="Departure:" aria-label="Number" [formControl]="myControl"
+        [matAutocomplete]="auto" [(ngModel)]="departure_input">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 22%; margin-right:40px">
+      <input matInput type="text" placeholder="To:" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto"
+        [(ngModel)]="arrival_input">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" style="width: 34%; margin-right:15px">
+      <input matInput [matDatepicker]="dep" placeholder="Date of departure:" [min]="minDate" [(ngModel)]="departure_date_input">
+      <mat-datepicker-toggle matSuffix [for]="dep"></mat-datepicker-toggle>
+      <mat-datepicker #dep></mat-datepicker>
+    </mat-form-field>
+    <button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
+      color="primary" (click)="onFindFlight()">Search Flight</button>
+  </mat-card>
+</div>
+
+<!-- Only for now, change to use routes -->
+<div *ngIf="!search_bar">
+  <mat-spinner style="margin:auto"></mat-spinner>
+  <app-flights-list></app-flights-list>
+</div>

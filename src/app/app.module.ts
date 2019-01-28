@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FlightsFindComponent } from './flights/flights-find/flights-find.component';
@@ -20,6 +21,8 @@ import { MatCardModule,
     MatToolbarModule,
     MatExpansionModule
 } from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { Routes, RouterModule } from '@angular/router';
 
 
 
@@ -28,7 +31,7 @@ import { MatCardModule,
     AppComponent,
     FlightsFindComponent,
     NavbarComponent,
-    FlightsListComponent
+    FlightsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,9 @@ import { MatCardModule,
     MatExpansionModule,
     MatSelectModule,
     MatAutocompleteModule,
+    HttpClientModule,
+    RouterModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     MatDatepickerModule,

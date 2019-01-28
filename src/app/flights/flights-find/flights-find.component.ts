@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
+
+import { FlightFind } from '../flight-find.model';
+
 import * as data from '../../../assets/data/airports.json';
 
 export interface Food {
@@ -15,11 +18,7 @@ export interface Food {
     styleUrls: ['./flights-find.component.css']
 })
 export class FlightsFindComponent implements OnInit {
-    dep = '';
-    arr = '';
-    dep_date = '';
-    arr_date = '';
-    class = '';
+    search_bar = true; // boolean for turning on search bar
     trip = 'Round Trip'; // default to round trip
     departure_input = '';
     arrival_input = '';
@@ -56,21 +55,23 @@ export class FlightsFindComponent implements OnInit {
 
     // button will trigger this function
     onFindFlight() {
-        this.dep = this.departure_input;
-        this.arr = this.arrival_input;
-        this.dep_date = this.departure_date_input;
-        this.arr_date = this.arrival_date_input;
-        this.class = this.class_input;
-        this.trip = this.trip_input;
+        this.search_bar = false;
+        const flight: FlightFind = {
+            departure: this.departure_input,
+            arrival: this.arrival_input,
+            dep_date: this.departure_date_input,
+            arr_date: this.arrival_date_input,
+            class: this.class_input,
+            trip: this.trip_input
+        };
 
         // for testing purpose
-        console.log(this.dep + ' ' + this.arr + ' ' + this.dep_date + ' ' + this.arr_date + ' ' + this.class + ' ' + this.trip);
+        console.log(flight.departure + ' ' + flight.arrival + ' ' + flight.dep_date
+                + ' ' + flight.arr_date + ' ' + flight.class + ' ' + flight.trip);
 
-        if (this.trip === 'Round Trip') {
-            // have dep_date and arr_date available
+        if (flight.trip === 'Round Trip') {
         }
-        if (this.trip === 'One Way') {
-            // have only dep_date
+        if (flight.trip === 'One Way') {
         }
     }
     onChangeTrip() {

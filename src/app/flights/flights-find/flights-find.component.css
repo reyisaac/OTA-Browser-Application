@@ -1,5 +1,8 @@
 mat-card {
     width: 1000px;
-    margin: auto;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
     border-radius: 0px;
 }
