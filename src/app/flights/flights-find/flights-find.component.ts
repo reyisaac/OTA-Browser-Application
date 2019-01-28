@@ -20,7 +20,7 @@ export class FlightsFindComponent implements OnInit {
     dep_date = '';
     arr_date = '';
     class = '';
-    trip = 'Round Trip';
+    trip = 'Round Trip'; // default to round trip
     departure_input = '';
     arrival_input = '';
     departure_date_input = '';
@@ -72,11 +72,6 @@ export class FlightsFindComponent implements OnInit {
         if (this.trip === 'One Way') {
             // have only dep_date
         }
-        if (this.trip === 'Multi Trip') {
-            // have multiple flights added bellow with only dep_date
-        }
-
-        // make a query next to express
     }
     onChangeTrip() {
         this.trip = this.trip_input;
