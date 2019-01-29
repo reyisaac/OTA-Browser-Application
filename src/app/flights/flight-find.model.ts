@@ -1,4 +1,5 @@
 export interface FlightFind {
+  id: string;
   departure: string;
   arrival: string;
   dep_date: string;

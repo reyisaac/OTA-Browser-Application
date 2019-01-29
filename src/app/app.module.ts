@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -22,7 +21,7 @@ import { MatCardModule,
     MatExpansionModule
 } from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { Routes, RouterModule } from '@angular/router';
+import { routingModule } from './app-routing.module';
 
 
 
@@ -35,7 +34,7 @@ import { Routes, RouterModule } from '@angular/router';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    routingModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -49,7 +48,6 @@ import { Routes, RouterModule } from '@angular/router';
     MatSelectModule,
     MatAutocompleteModule,
     HttpClientModule,
-    RouterModule,
     MatProgressSpinnerModule
   ],
   providers: [

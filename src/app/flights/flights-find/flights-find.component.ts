@@ -7,17 +7,13 @@ import { FlightFind } from '../flight-find.model';
 
 import * as data from '../../../assets/data/airports.json';
 
-export interface Food {
-    value: string;
-    viewValue: string;
-}
-
 @Component({
     selector: 'app-flights-find',
     templateUrl: './flights-find.component.html',
     styleUrls: ['./flights-find.component.css']
 })
 export class FlightsFindComponent implements OnInit {
+    flight: FlightFind;
     search_bar = true; // boolean for turning on search bar
     trip = 'Round Trip'; // default to round trip
     departure_input = '';
@@ -56,7 +52,8 @@ export class FlightsFindComponent implements OnInit {
     // button will trigger this function
     onFindFlight() {
         this.search_bar = false;
-        const flight: FlightFind = {
+        this.flight = {
+            id: null,
             departure: this.departure_input,
             arrival: this.arrival_input,
             dep_date: this.departure_date_input,
@@ -65,14 +62,6 @@ export class FlightsFindComponent implements OnInit {
             trip: this.trip_input
         };
 
-        // for testing purpose
-        console.log(flight.departure + ' ' + flight.arrival + ' ' + flight.dep_date
-                + ' ' + flight.arr_date + ' ' + flight.class + ' ' + flight.trip);
-
-        if (flight.trip === 'Round Trip') {
-        }
-        if (flight.trip === 'One Way') {
-        }
     }
     onChangeTrip() {
         this.trip = this.trip_input;
