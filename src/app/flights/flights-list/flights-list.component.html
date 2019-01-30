@@ -7,6 +7,9 @@
         {{ flight.airline_name }}
       </mat-panel-title>
       <mat-panel-description>
+        {{ flight.date }}
+      </mat-panel-description>
+      <mat-panel-description>
         {{ flight.time }}
       </mat-panel-description>
       <mat-panel-description>
@@ -18,3 +21,5 @@
     </mat-expansion-panel-header>
   </mat-expansion-panel>
 </mat-accordion>
+<button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
+    color="primary" [routerLink]="[ '' ]">Go Back!</button>

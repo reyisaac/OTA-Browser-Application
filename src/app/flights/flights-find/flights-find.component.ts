@@ -14,28 +14,28 @@ import * as data from '../../../assets/data/airports.json';
     styleUrls: ['./flights-find.component.css']
 })
 export class FlightsFindComponent implements OnInit, OnDestroy {
-    flight: FlightFind;
-    search_bar = true; // boolean for turning on search bar
-    trip = 'Round Trip'; // default to round trip
+    flight: FlightFind; // default to round trip
+    trip_input = 'Round Trip';
     departure_input = '';
     arrival_input = '';
     departure_date_input = '';
     arrival_date_input = '';
-    class_input = '';
-    trip_input = '';
+    class_input = 'Economy';
 
     minDate = new Date();
 
     myControl = new FormControl();
-    options: string[] = [];
+    airports: string[] = [];
+
     filteredOptions: Observable<string[]>;
+
     constructor(public flightsService: FlightListService) {}
 
     ngOnInit() {
-        // looking inside airport.json and finiding airports
+        // looking inside airport.json and finding airports
         for (const key in data.default.iata) {
             if (data.default.iata.hasOwnProperty(key)) {
-                this.options.push(data.default.iata[key]);
+                this.airports.push(data.default.iata[key]);
             }
         }
         this.filteredOptions = this.myControl.valueChanges
@@ -48,12 +48,27 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
 
-        return this.options.filter(index => index.toLowerCase().includes(filterValue));
+        return this.airports.filter(index => index.toLowerCase().includes(filterValue));
     }
 
     // button will trigger this function
     onFindFlight() {
-        this.search_bar = false;
+        // for sending the iata code instead of the airport name
+        for (const key in data.default.iata) {
+            if (key) {
+                switch (data.default.iata[key]) {
+                    case this.departure_input:
+                        this.departure_input = key;
+                        break;
+                    case this.arrival_input:
+                        this.arrival_input = key;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         this.flight = {
             id: null,
             departure: this.departure_input,
@@ -66,7 +81,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
 
     }
     onChangeTrip() {
-        this.trip = this.trip_input;
+        this.trip_input = this.trip_input;
     }
 
     ngOnDestroy() {

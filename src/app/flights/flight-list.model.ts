@@ -2,6 +2,7 @@
 export interface FlightList {
     id: string;
     airline_name: string;
+    date: string;
     time: string;
     route: string;
     price: string;

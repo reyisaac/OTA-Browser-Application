@@ -1,4 +1,5 @@
 mat-expansion-panel {
+    top-margin: 20px;
     margin: auto;
     border-radius: 0px;
     width: 1000px;
