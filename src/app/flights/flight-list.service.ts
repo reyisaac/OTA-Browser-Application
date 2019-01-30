@@ -11,22 +11,16 @@ export class FlightListService {
 
   constructor(private http: HttpClient) {}
 
-  getFlights() {
-    this.http.get<{message: string, flights: FlightList[]}>('http://localhost:3000/api/flights')
-        .subscribe((flightData) => {
-            this.flights = flightData.flights;
-            this.flightsUpdated.next([...this.flights]);
-        });
-  }
+  public flight: FlightFind;
 
   getFlightUpdateListener() {
     return this.flightsUpdated.asObservable();
   }
 
-  searchFlight(flight: FlightFind) {
-
-    const  params = new  HttpParams().set('id', null).set('departure', flight.departure).set('arrival', flight.arrival).
-          set('dep_date', flight.dep_date).set('arr_date', flight.arr_date).set('class', flight.class).set('trip', flight.trip);
+  searchFlight() {
+    const  params = new  HttpParams().set('id', null).set('departure', this.flight.departure).set('arrival', this.flight.arrival).
+    set('dep_date', this.flight.dep_date).set('arr_date', this.flight.arr_date).
+    set('class', this.flight.class).set('trip', this.flight.trip);
 
     this.http.get<{message: string, flights: FlightList[]}>('http://localhost:3000/api/flights', { params })
       .subscribe((flightData) => {

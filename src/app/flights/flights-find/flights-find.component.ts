@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { FlightFind } from '../flight-find.model';
+import { FlightListService } from '../flight-list.service';
 
 import * as data from '../../../assets/data/airports.json';
 
@@ -12,7 +13,7 @@ import * as data from '../../../assets/data/airports.json';
     templateUrl: './flights-find.component.html',
     styleUrls: ['./flights-find.component.css']
 })
-export class FlightsFindComponent implements OnInit {
+export class FlightsFindComponent implements OnInit, OnDestroy {
     flight: FlightFind;
     search_bar = true; // boolean for turning on search bar
     trip = 'Round Trip'; // default to round trip
@@ -28,6 +29,7 @@ export class FlightsFindComponent implements OnInit {
     myControl = new FormControl();
     options: string[] = [];
     filteredOptions: Observable<string[]>;
+    constructor(public flightsService: FlightListService) {}
 
     ngOnInit() {
         // looking inside airport.json and finiding airports
@@ -65,5 +67,9 @@ export class FlightsFindComponent implements OnInit {
     }
     onChangeTrip() {
         this.trip = this.trip_input;
+    }
+
+    ngOnDestroy() {
+        this.flightsService.flight = this.flight;
     }
 }
