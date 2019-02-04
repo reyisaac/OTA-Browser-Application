@@ -1,25 +1,25 @@
-<app-navbar></app-navbar>
-
-<mat-accordion multi="true" *ngIf="flights.length > 0">
-  <mat-expansion-panel class="mat-elevation-z5" *ngFor="let flight of flights">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ flight.airline_name }}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ flight.date }}
-      </mat-panel-description>
-      <mat-panel-description>
-        {{ flight.time }}
-      </mat-panel-description>
-      <mat-panel-description>
-        {{ flight.route }}
-      </mat-panel-description>
-      <mat-panel-description>
-        {{ flight.price }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-</mat-accordion>
-<button class="mat-elevation-z5" style="float: right; margin-right: 15px; border-radius: 20px;" mat-raised-button
-    color="primary" [routerLink]="[ '' ]">Go Back!</button>
+<div>
+  <mat-accordion multi="true" *ngIf="flights.length > 0">
+    <mat-expansion-panel class="mat-elevation-z5" *ngFor="let flight of flights">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ flight.airline_name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ flight.date }}
+        </mat-panel-description>
+        <mat-panel-description>
+          {{ flight.time }}
+        </mat-panel-description>
+        <mat-panel-description>
+          {{ flight.route }}
+        </mat-panel-description>
+        <mat-panel-description>
+          {{ flight.price }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button mat-button mat-raised-button color="primary" style="float: right; border-radius: 5px;" >Add to Cart!</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<button style="float: right; margin-right: 15px; margin-top: 15px; margin-bottom: 15px; border-radius: 5px;" mat-raised-button color="primary" (click)="onGoBack()">Go Back!</button>

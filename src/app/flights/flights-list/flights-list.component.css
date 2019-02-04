@@ -1,8 +1,10 @@
-mat-expansion-panel {
-    top-margin: 20px;
-    margin: auto;
+div {
+    width: 800px;
+    margin-top: 5%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 0px;
-    width: 1000px;
 }
 
 

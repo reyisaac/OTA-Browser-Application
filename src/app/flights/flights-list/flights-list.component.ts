@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { FlightList } from '../flight-list.model';
 import { FlightListService } from '../flight-list.service';
@@ -16,7 +17,7 @@ export class FlightsListComponent implements OnInit, OnDestroy {
     flights: FlightList[] = [];
     private flightsSub: Subscription;
 
-    constructor(public flightsService: FlightListService) {}
+    constructor(public flightsService: FlightListService,  private _location: Location) {}
 
     ngOnInit() {
       this.flightsService.searchFlight();
@@ -28,5 +29,8 @@ export class FlightsListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
       this.flightsSub.unsubscribe();
+    }
+    onGoBack() {
+      this._location.back();
     }
 }

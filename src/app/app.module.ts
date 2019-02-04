@@ -22,6 +22,7 @@ import { MatCardModule,
 } from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { routingModule } from './app-routing.module';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 
@@ -48,7 +49,8 @@ import { routingModule } from './app-routing.module';
     MatSelectModule,
     MatAutocompleteModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRadioModule
   ],
   providers: [
     MatDatepickerModule,

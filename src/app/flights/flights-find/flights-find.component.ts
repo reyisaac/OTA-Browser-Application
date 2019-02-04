@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 
 import { FlightFind } from '../flight-find.model';
 import { FlightListService } from '../flight-list.service';
+import {Router} from '@angular/router';
 
 import * as data from '../../../assets/data/airports.json';
 
@@ -21,6 +22,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
     departure_date_input = '';
     arrival_date_input = '';
     class_input = 'Economy';
+    error = false;
 
     minDate = new Date();
 
@@ -29,7 +31,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
 
     filteredOptions: Observable<string[]>;
 
-    constructor(public flightsService: FlightListService) {}
+    constructor(public flightsService: FlightListService, private router: Router) {}
 
     ngOnInit() {
         // looking inside airport.json and finding airports
@@ -69,6 +71,20 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             }
         }
 
+        // checking input form
+        if (this.trip_input === 'Round Trip') {
+            if (this.departure_date_input === '' || this.departure_input === '' ||
+                this.arrival_date_input === '' || this.arrival_input === '') {
+                    this.error = true;
+                return;
+            }
+        } else {
+            if (this.departure_date_input === '' || this.departure_input === '' || this.arrival_input === '') {
+                this.error = true;
+                return;
+            }
+        }
+
         this.flight = {
             id: null,
             departure: this.departure_input,
@@ -79,9 +95,12 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             trip: this.trip_input
         };
 
+        this.router.navigate(['/flights']);
     }
+
     onChangeTrip() {
         this.trip_input = this.trip_input;
+        this.error = false;
     }
 
     ngOnDestroy() {
