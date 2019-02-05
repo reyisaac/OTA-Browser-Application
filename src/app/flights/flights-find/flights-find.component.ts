@@ -5,16 +5,36 @@ import { map, startWith } from 'rxjs/operators';
 
 import { FlightFind } from '../flight-find.model';
 import { FlightListService } from '../flight-list.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import * as data from '../../../assets/data/airports.json';
 
 @Component({
     selector: 'app-flights-find',
     templateUrl: './flights-find.component.html',
-    styleUrls: ['./flights-find.component.css']
+    styleUrls: ['./flights-find.component.css'],
+    animations: [
+        trigger('changeDivSize', [
+            state('initial', style({
+              opacity: 0,
+              transform: 'translateY(-5%)',
+            })),
+            state('normal', style({
+                opacity: 1,
+                transform: 'translateY(0%)'
+            })),
+            state('final', style({
+                opacity: 0,
+                transform: 'translateY(-5%)'
+            })),
+            transition('initial=>normal', animate('300ms')),
+            transition('normal=>final', animate('300ms'))
+          ]),
+    ]
 })
 export class FlightsFindComponent implements OnInit, OnDestroy {
+    currentState = '';
     flight: FlightFind; // default to round trip
     trip_input = 'Round Trip';
     departure_input = '';
@@ -34,6 +54,8 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
     constructor(public flightsService: FlightListService, private router: Router) {}
 
     ngOnInit() {
+        this.currentState = 'initial';
+        setTimeout(() => this.currentState = 'normal', 100);
         // looking inside airport.json and finding airports
         for (const key in data.default.iata) {
             if (data.default.iata.hasOwnProperty(key)) {
@@ -85,6 +107,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             }
         }
 
+        this.currentState = 'final';
         this.flight = {
             id: null,
             departure: this.departure_input,
@@ -95,7 +118,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             trip: this.trip_input
         };
 
-        this.router.navigate(['/flights']);
+        setTimeout(() => this.router.navigate(['/flights']), 300);
     }
 
     onChangeTrip() {

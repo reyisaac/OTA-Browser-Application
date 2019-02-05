@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { FlightsFindComponent } from './flights/flights-find/flights-find.component';
 import { FlightsListComponent } from './flights/flights-list/flights-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -18,13 +20,15 @@ import { MatCardModule,
     MatButtonModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatPaginatorModule
 } from '@angular/material';
+
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { routingModule } from './app-routing.module';
 import {MatRadioModule} from '@angular/material/radio';
-
-
+import {MatIconModule} from '@angular/material/icon';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,8 @@ import {MatRadioModule} from '@angular/material/radio';
     FlightsFindComponent,
     NavbarComponent,
     FlightsListComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,11 +52,14 @@ import {MatRadioModule} from '@angular/material/radio';
     MatNativeDateModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatPaginatorModule,
     MatSelectModule,
     MatAutocompleteModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatIconModule,
+    ScrollDispatchModule,
   ],
   providers: [
     MatDatepickerModule,

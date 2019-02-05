@@ -1,1 +1,20 @@
-<mat-toolbar class="mat-elevation-z5" color="primary">NGDS</mat-toolbar>
+<mat-toolbar class="transparent-background fixed-header" color="primary">
+    <span>
+        <a mat-button routerLink="/">
+            <mat-icon>search</mat-icon>Search
+        </a>
+    </span>
+    <span class="spacer"></span>
+    <ul>
+        <li>
+            <a mat-button routerLink="/signup" routerLinkActive="mat-accent">
+                <mat-icon>person_add</mat-icon>signup
+            </a>
+        </li>
+        <li>
+            <a mat-button routerLink="/login" routerLinkActive="mat-accent">
+                <mat-icon>account_circle</mat-icon>login
+            </a>
+        </li>
+    </ul>
+</mat-toolbar>

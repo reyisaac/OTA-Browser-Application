@@ -1,25 +1,30 @@
-<div>
-  <mat-accordion multi="true" *ngIf="flights.length > 0">
-    <mat-expansion-panel class="mat-elevation-z5" *ngFor="let flight of flights">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ flight.airline_name }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ flight.date }}
-        </mat-panel-description>
-        <mat-panel-description>
-          {{ flight.time }}
-        </mat-panel-description>
-        <mat-panel-description>
-          {{ flight.route }}
-        </mat-panel-description>
-        <mat-panel-description>
-          {{ flight.price }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <button mat-button mat-raised-button color="primary" style="float: right; border-radius: 5px;" >Add to Cart!</button>
-    </mat-expansion-panel>
-  </mat-accordion>
+<mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
+<div [@changeDivSize]=currentState>
+  <cdk-virtual-scroll-viewport itemSize="flights.length" class="example-viewport" *ngIf="!isLoading" >
+    <mat-accordion multi="true" *ngIf="flights.length > 0">
+      <mat-expansion-panel *cdkVirtualFor="let flight of flights">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ flight.airline_name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ flight.time }}
+          </mat-panel-description>
+          <mat-panel-description>
+            <mat-icon>insert_invitation</mat-icon>
+            {{ flight.date }}
+          </mat-panel-description>
+          <mat-panel-description>
+            <mat-icon>flight_takeoff</mat-icon>
+            {{ flight.route }}
+          </mat-panel-description>
+          <mat-panel-description>
+            {{ flight.price }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button mat-button mat-raised-button color="primary" style="float: right; border-radius: 5px;">Add to Cart!</button>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </cdk-virtual-scroll-viewport>
+  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="flights.length > 0"></mat-paginator>
 </div>
-<button style="float: right; margin-right: 15px; margin-top: 15px; margin-bottom: 15px; border-radius: 5px;" mat-raised-button color="primary" (click)="onGoBack()">Go Back!</button>

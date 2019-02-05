@@ -17,10 +17,10 @@ export class FlightListService {
     return this.flightsUpdated.asObservable();
   }
 
-  searchFlight() {
+  searchFlight(flightsPerPage: number, currentPage: number) {
     const  params = new  HttpParams().set('id', null).set('departure', this.flight.departure).set('arrival', this.flight.arrival).
-    set('dep_date', this.flight.dep_date).set('arr_date', this.flight.arr_date).
-    set('class', this.flight.class).set('trip', this.flight.trip);
+    set('dep_date', this.flight.dep_date).set('arr_date', this.flight.arr_date).set('class', this.flight.class).
+    set('trip', this.flight.trip).set('pageSize', String(flightsPerPage)).set('currentPage', String(currentPage));
 
     this.http.get<{message: string, flights: FlightList[]}>('http://localhost:3000/api/flights', { params })
       .subscribe((flightData) => {
