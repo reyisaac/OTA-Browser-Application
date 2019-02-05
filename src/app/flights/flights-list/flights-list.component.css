@@ -26,12 +26,8 @@ mat-paginator {
     margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
-    height: 570px;
+    height: 80vh;
     width: 800px;
     border: 0px solid black;
     background-color: rgb(255, 255, 255);
-  }
-  
-  .example-item {
-    height: 50px;
-  }
+}
