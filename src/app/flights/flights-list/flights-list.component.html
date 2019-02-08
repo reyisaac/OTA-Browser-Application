@@ -5,21 +5,24 @@
       <mat-expansion-panel *cdkVirtualFor="let flight of flights">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{ flight.airline_name }}
+            {{ flight.airline }}
           </mat-panel-title>
           <mat-panel-description>
-            {{ flight.time }}
+            {{ flight.dep_time }} - {{ flight.arr_time }}
           </mat-panel-description>
           <mat-panel-description>
             <mat-icon>insert_invitation</mat-icon>
-            {{ flight.date }}
+            {{ flight.dep_date }} - {{ flight.arr_date }}
           </mat-panel-description>
           <mat-panel-description>
             <mat-icon>flight_takeoff</mat-icon>
-            {{ flight.route }}
+            {{ flight.departure }} - {{ flight.arrival }} 
           </mat-panel-description>
           <mat-panel-description>
             {{ flight.price }}
+          </mat-panel-description>
+          <mat-panel-description>
+            {{ flight.class }}
           </mat-panel-description>
         </mat-expansion-panel-header>
         <button mat-button mat-raised-button color="primary" style="float: right; border-radius: 5px;">Add to Cart!</button>

@@ -1,9 +1,12 @@
 // it could be expanded for ndc standard
 export interface FlightList {
-    id: string;
-    airline_name: string;
-    date: string;
-    time: string;
-    route: string;
-    price: string;
+  id: string;
+  arrival: string;
+  dep_date: string;
+  arr_date: string;
+  dep_time: string;
+  arr_time: string;
+  class: string;
+  price: string;
+  airline: string;
 }

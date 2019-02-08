@@ -2,12 +2,12 @@
 <mat-card class="mat-elevation-z5" [@changeDivSize]=currentState>
     <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
         <mat-form-field class="example-full-width" style="width: 49%; margin-right:2%">
-            <input matInput name="text" ngModel type="text" placeholder="First Name:" #firstNameInput="ngModel"
+            <input matInput name="first_name" ngModel type="text" placeholder="First Name:" #firstNameInput="ngModel"
                 required>
             <mat-error *ngIf="emailInput.invalid">Please enter your first name.</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width" style="width: 49%">
-            <input matInput name="text" ngModel type="text" placeholder="Last Name:" #lastNameInput="ngModel" required>
+            <input matInput name="last_name" ngModel type="text" placeholder="Last Name:" #lastNameInput="ngModel" required>
             <mat-error *ngIf="emailInput.invalid">Please enter your last name.</mat-error>
         </mat-form-field>
         <br>

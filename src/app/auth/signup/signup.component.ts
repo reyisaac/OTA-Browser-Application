@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
+import { AuthService } from '../auth.service';
+
 @Component({
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css'],
@@ -29,8 +31,14 @@ export class SignupComponent implements OnInit {
     currentState = '';
     isLoading = false;
 
-    onSignup(form: NgForm) {
+    constructor(public authService: AuthService) {}
 
+    onSignup(form: NgForm) {
+        if (form.invalid) {
+            return;
+        }
+
+        this.authService.createUser(form.value.email, form.value.password, form.value.first_name, form.value.last_name);
     }
 
     ngOnInit() {
