@@ -6,15 +6,21 @@
     </span>
     <span class="spacer"></span>
     <ul>
-        <li>
+        <li *ngIf="userisAunthenticated">
+            <h4>Welcome Back</h4> <!--todo: use user's real name-->
+        </li>
+        <li *ngIf="!userisAunthenticated">
             <a mat-button routerLink="/signup" routerLinkActive="mat-accent">
                 <mat-icon>person_add</mat-icon>signup
             </a>
         </li>
-        <li>
+        <li *ngIf="!userisAunthenticated">
             <a mat-button routerLink="/login" routerLinkActive="mat-accent">
                 <mat-icon>account_circle</mat-icon>login
             </a>
+        </li>
+        <li *ngIf="userisAunthenticated">
+            <button mat-buton (click)="onLogout()">Logout</button>
         </li>
     </ul>
 </mat-toolbar>

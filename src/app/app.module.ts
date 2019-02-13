@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FlightsFindComponent } from './flights/flights-find/flights-find.component';
@@ -24,11 +24,12 @@ import { MatCardModule,
     MatPaginatorModule
 } from '@angular/material';
 
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { routingModule } from './app-routing.module';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatIconModule} from '@angular/material/icon';
-import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {ScrollDispatchModule} from '@angular/cdk/scrolling';
     ScrollDispatchModule,
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     MatDatepickerModule,
   ],
   bootstrap: [AppComponent]
