@@ -10,6 +10,9 @@ export class AuthService {
     private isAuthenticated = false;
     private token: string;
     private authStatusListener = new Subject<boolean>();
+    public first_name = '';
+    public last_name = '';
+    private tokenTimer: any;
 
     constructor(private http: HttpClient, private router: Router) {}
 
@@ -35,27 +38,92 @@ export class AuthService {
 
         this.http.post('http://localhost:3000/api/user/signup', userData)
             .subscribe(response => {
+                this.router.navigate(['/login']);
                 console.log(response);
             });
     }
 
     login(email: string, password: string) {
-        this.http.post<{token: string}>('http://localhost:3000/api/user/login',  { email: email, password: password })
+        this.http
+            .post<{token: string, first_name: string, last_name: string, expiresIn: number}>('http://localhost:3000/api/user/login',
+                                                                                                     { email: email, password: password })
             .subscribe(response => {
                 const token = response.token;
+                const first_name = response.first_name;
+                const last_name = response.last_name;
                 this.token = token;
                 if (token) {
+                    const expiresInDuration = response.expiresIn;
+                    this.setAuthTimer(expiresInDuration);
                     this.isAuthenticated = true;
+                    this.first_name = first_name;
+                    this.last_name = last_name;
                     this.authStatusListener.next(true);
+                    const now = new Date();
+                    const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+                    this.saveAuthData(token, first_name, last_name, expirationDate);
                     this.router.navigate(['/']);
                 }
+
             });
+    }
+
+    autoAuthUser() {
+        const authInformation = this.getAuthData();
+        if (!authInformation) {
+            return;
+        }
+        const now = new Date();
+        const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+        if (expiresIn > 0) {
+            this.token = authInformation.token;
+            this.first_name = authInformation.first_name;
+            this.last_name = authInformation.last_name;
+            this.isAuthenticated = true;
+            this.setAuthTimer(expiresIn);
+            this.authStatusListener.next(true);
+        }
     }
 
     logout() {
         this.token = null;
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
+        clearTimeout(this.tokenTimer);
+        this.clearAuthData();
         this.router.navigate(['/']);
+    }
+
+    private setAuthTimer(duration: number) {
+        this.tokenTimer = setTimeout(() => {
+            this.logout();
+        }, duration * 1000);
+    }
+    private saveAuthData(token: string, first_name: string, last_name: string, expirationDate: Date) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('first_name', first_name);
+        localStorage.setItem('last_name', last_name);
+        localStorage.setItem('expiration', expirationDate.toISOString());
+    }
+    private clearAuthData() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('first_name');
+        localStorage.removeItem('last_name');
+        localStorage.removeItem('expiration');
+    }
+    private getAuthData() {
+        const token = localStorage.getItem('token');
+        const first_name = localStorage.getItem('first_name');
+        const last_name = localStorage.getItem('last_name');
+        const expirationDate = localStorage.getItem('expiration');
+        if (!token || !first_name || !last_name || !expirationDate) {
+            return;
+        }
+        return {
+            token: token,
+            first_name: first_name,
+            last_name: last_name,
+            expirationDate: new Date(expirationDate)
+        };
     }
 }

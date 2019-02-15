@@ -10,15 +10,22 @@ import { Subscription } from 'rxjs';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   userisAunthenticated = false;
+  first_name = '';
+  last_name = '';
+
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.userisAunthenticated = this.authService.getIsAuth();
+
     this.authListenerSubs = this.authService
     .getAuthStatusListener()
     .subscribe(isAuthenticated => {
       this.userisAunthenticated = isAuthenticated;
+      this.first_name = this.authService.first_name;
+      this.last_name = this.authService.last_name;
     });
   }
 

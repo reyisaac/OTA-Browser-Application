@@ -28,7 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { routingModule } from './app-routing.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
-import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
@@ -60,7 +60,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatIconModule,
-    ScrollDispatchModule,
+    ScrollingModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
