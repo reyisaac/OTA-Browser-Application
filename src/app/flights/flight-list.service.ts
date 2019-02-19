@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class FlightListService {
   private flights: FlightList[] = [];
-  private flightsUpdated = new Subject<FlightList[]>();
+  private flightsUpdated = new Subject<{ flights: FlightList[], flightCount: number}>();
 
   constructor(private http: HttpClient) {}
 
@@ -19,14 +19,21 @@ export class FlightListService {
   }
 
   searchFlight(flightsPerPage: number, currentPage: number) {
-    const  params = new  HttpParams().set('id', null).set('departure', this.flight.departure).set('arrival', this.flight.arrival).
-    set('dep_date', this.flight.dep_date).set('arr_date', this.flight.arr_date).set('class', this.flight.class).
-    set('trip', this.flight.trip).set('pageSize', String(flightsPerPage)).set('currentPage', String(currentPage));
+    const  params = new  HttpParams()
+      .set('id', null)
+      .set('departure', this.flight.departure)
+      .set('arrival', this.flight.arrival)
+      .set('dep_date', this.flight.dep_date)
+      .set('arr_date', this.flight.arr_date)
+      .set('class', this.flight.class)
+      .set('trip', this.flight.trip)
+      .set('pagesize', String(flightsPerPage))
+      .set('page', String(currentPage));
 
     this.http
-      .get<{message: string, flights: any}>('http://localhost:3000/api/flights', { params })
+      .get<{message: string, flights: any, maxFlights: number}>('http://localhost:3000/api/flights', { params })
       .pipe(map((flightData) => {
-        return flightData.flights.map(flight => {
+        return { flights: flightData.flights.map(flight => {
           return {
             departure: flight.departure,
             arrival: flight.arrival,
@@ -39,11 +46,17 @@ export class FlightListService {
             airline: flight.airline,
             id: flight._id,
           };
-        });
-      }))
-      .subscribe((transformedFlight) => {
-        this.flights = transformedFlight;
-        this.flightsUpdated.next([...this.flights]);
+        }),
+        maxFlights: flightData.maxFlights
+      };
+      })
+    )
+    .subscribe((transformedFlightData) => {
+      this.flights = transformedFlightData.flights;
+      this.flightsUpdated.next({
+        flights: [...this.flights],
+        flightCount: transformedFlightData.maxFlights
+      });
     });
   }
 }

@@ -33,7 +33,7 @@
     <mat-error *ngIf="!departure_date_input">Please enter a valid date.</mat-error>
   </mat-form-field>
   <mat-form-field class="example-full-width" style="width: 38%; margin-right:2%" *ngIf="trip_input === 'Round Trip'">
-    <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [min]="minDate" [(ngModel)]="arrival_date_input" required>
+    <input matInput [matDatepicker]="arr" placeholder="Date of arrival:" [min]="departure_date_input" [(ngModel)]="arrival_date_input" required>
     <mat-datepicker-toggle matSuffix [for]="arr"></mat-datepicker-toggle>
     <mat-datepicker #arr></mat-datepicker>
     <mat-error *ngIf="!arrival_date_input">Please enter a valid date.</mat-error>

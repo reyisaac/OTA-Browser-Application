@@ -32,10 +32,10 @@ export class FlightsListComponent implements OnInit, OnDestroy {
     currentState = '';
     flight: FlightFind;
     isLoading = false;
-    totalFlights = 10;
-    flightsPerPage = 10;
+    totalFlights = 0;
+    flightsPerPage = 20;
     currentPage = 1;
-    pageSizeOptions = [10, 20, 50];
+    pageSizeOptions = [20, 50, 100];
     flights: FlightList[] = [];
     private flightsSub: Subscription;
 
@@ -44,13 +44,14 @@ export class FlightsListComponent implements OnInit, OnDestroy {
     ngOnInit() {
       this.currentState = 'initial';
       this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
+      setTimeout(() => this.currentState = 'normal', 300);
       this.isLoading = true;
-      setTimeout(() => this.currentState = 'normal', 200);
       this.flightsSub = this.flightsService.getFlightUpdateListener()
-        .subscribe((flights: FlightList[]) => {
+        .subscribe((flightData: {flights: FlightList[], flightCount: number}) => {
           this.isLoading = false;
-          this.flights = flights;
-          this.totalFlights = flights.length;
+          this.currentState = 'normal';
+          this.flights = flightData.flights;
+          this.totalFlights = flightData.flightCount;
         });
     }
 
@@ -58,11 +59,11 @@ export class FlightsListComponent implements OnInit, OnDestroy {
       this.flightsSub.unsubscribe();
     }
 
-    // todo: pagination from the back-end
     onChangedPage(pageData: PageEvent) {
       this.isLoading = true;
       this.currentPage = pageData.pageIndex + 1;
       this.flightsPerPage = pageData.pageSize;
+      this.currentState = 'initial';
       this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
     }
 }

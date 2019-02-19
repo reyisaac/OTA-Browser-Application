@@ -8,18 +8,17 @@
             {{ flight.airline }}
           </mat-panel-title>
           <mat-panel-description>
-            {{ flight.dep_time }} - {{ flight.arr_time }}
+            {{ flight.departure }} - {{ flight.arrival }} 
           </mat-panel-description>
           <mat-panel-description>
             <mat-icon>insert_invitation</mat-icon>
             {{ flight.dep_date }} - {{ flight.arr_date }}
           </mat-panel-description>
           <mat-panel-description>
-            <mat-icon>flight_takeoff</mat-icon>
-            {{ flight.departure }} - {{ flight.arrival }} 
+            {{ flight.dep_time }} - {{ flight.arr_time }}
           </mat-panel-description>
           <mat-panel-description>
-            {{ flight.price }}
+            $ {{ flight.price }}
           </mat-panel-description>
           <mat-panel-description>
             {{ flight.class }}
@@ -29,5 +28,5 @@
       </mat-expansion-panel>
     </mat-accordion>
   </cdk-virtual-scroll-viewport>
-  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="flights.length > 0"></mat-paginator>
+  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="!isLoading"></mat-paginator>
 </div>
