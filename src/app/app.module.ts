@@ -13,6 +13,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
@@ -23,6 +25,7 @@ import { MatCardModule,
     MatExpansionModule,
     MatPaginatorModule
 } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { routingModule } from './app-routing.module';
@@ -60,6 +63,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatIconModule,
+    MatListModule,
+    MatDividerModule,
+    MatTooltipModule,
     ScrollingModule,
   ],
   providers: [

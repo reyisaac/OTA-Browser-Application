@@ -1,32 +1,21 @@
 <mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
-<div [@changeDivSize]=currentState>
   <cdk-virtual-scroll-viewport itemSize="flights.length" class="example-viewport" *ngIf="!isLoading" >
-    <mat-accordion multi="true" *ngIf="flights.length > 0">
-      <mat-expansion-panel *cdkVirtualFor="let flight of flights">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ flight.airline }}
-          </mat-panel-title>
-          <mat-panel-description>
-            {{ flight.departure }} - {{ flight.arrival }} 
-          </mat-panel-description>
-          <mat-panel-description>
-            <mat-icon>insert_invitation</mat-icon>
+    <mat-list multi="true" *ngIf="flights.length > 0">
+      <mat-list-item *ngFor="let flight of flights">
+          <div mat-line>
+            <mat-icon mat-list-icon>flight_takeoff</mat-icon>
+            <b style="margin-left: 5px">{{ flight.departure }} - {{ flight.arrival }}</b>
+            {{ flight.dep_time }}-{{ flight.arr_time }}
+          </div>
+          <p mat-line>
             {{ flight.dep_date }} - {{ flight.arr_date }}
-          </mat-panel-description>
-          <mat-panel-description>
-            {{ flight.dep_time }} - {{ flight.arr_time }}
-          </mat-panel-description>
-          <mat-panel-description>
-            $ {{ flight.price }}
-          </mat-panel-description>
-          <mat-panel-description>
-            {{ flight.class }}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <button mat-button mat-raised-button color="primary" style="float: right; border-radius: 5px;">Add to Cart!</button>
-      </mat-expansion-panel>
-    </mat-accordion>
+          </p>
+          <div style="margin-right: 10px">
+            ${{ flight.price }}
+          </div>
+          <button matTooltip="Book this trip" matTooltipPosition="above" mat-flat-button color="primary" style="float: right; width: 10px; border-radius: 50px;"><mat-icon mat-list-icon>add_shopping_cart</mat-icon></button>
+          <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
   </cdk-virtual-scroll-viewport>
   <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="!isLoading"></mat-paginator>
-</div>
