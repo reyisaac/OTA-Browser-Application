@@ -21,32 +21,56 @@ export class FlightsListComponent implements OnInit, OnDestroy {
     flightsPerPage = 20;
     currentPage = 1;
     pageSizeOptions = [20, 50, 100];
+
     flights: FlightList[] = [];
+    // round trip
+    origin: FlightList[] = [];
+    destination: FlightList[] = [];
+    mergedTrip: FlightList[] = [];
+
     private flightsSub: Subscription;
 
     constructor(public flightsService: FlightListService, private router: Router) {}
 
     ngOnInit() {
       this.isLoading = true;
-      this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
 
-      this.flightsSub = this.flightsService.getFlightUpdateListener()
+      if (this.flightsService.flight.trip === 'One Way') {
+        this.flightsService.searchOneWayFlight(this.flightsPerPage, this.currentPage);
+        this.flightsSub = this.flightsService
+        .getFlightUpdateListener()
         .subscribe((flightData: {flights: FlightList[], flightCount: number, }) => {
           this.isLoading = false;
           this.flights = flightData.flights;
           this.totalFlights = flightData.flightCount;
         });
+      } else {
+        this.flightsService.searchRoundTripFlight(this.flightsPerPage, this.currentPage);
+        this.flightsSub = this.flightsService
+        .getRoundTripUpdateListener()
+        .subscribe((flightData: {origin: FlightList[], destination: FlightList[], flightCount: number, }) => {
+          this.isLoading = false;
+          this.origin = flightData.origin;
+          this.destination = flightData.destination;
+          this.totalFlights = flightData.flightCount;
+        });
+      }
+
     }
 
     ngOnDestroy() {
-      this.flightsSub.unsubscribe();
+        this.flightsSub.unsubscribe();
     }
 
     onChangedPage(pageData: PageEvent) {
       this.isLoading = true;
       this.currentPage = pageData.pageIndex + 1;
       this.flightsPerPage = pageData.pageSize;
-      this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
+      if (this.flightsService.flight.trip === 'One Way') {
+        this.flightsService.searchOneWayFlight(this.flightsPerPage, this.currentPage);
+      } else {
+        this.flightsService.searchRoundTripFlight(this.flightsPerPage, this.currentPage);
+      }
     }
 
     onBooking(id: any) {

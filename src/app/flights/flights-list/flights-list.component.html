@@ -1,7 +1,37 @@
-<mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
-  <cdk-virtual-scroll-viewport itemSize="flights.length" class="example-viewport" *ngIf="!isLoading" >
+<div *ngIf="this.flightsService.flight.trip === 'One Way'">
+  <mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
+  <cdk-virtual-scroll-viewport itemSize="flights.length" class="example-viewport" *ngIf="!isLoading">
     <mat-list multi="true" *ngIf="flights.length > 0">
       <mat-list-item *ngFor="let flight of flights">
+        <div mat-line>
+          <mat-icon mat-list-icon>flight_takeoff</mat-icon>
+          <b style="margin-left: 5px">{{ flight.departure }} - {{ flight.arrival }}</b>
+          {{ flight.dep_time }}-{{ flight.arr_time }}
+        </div>
+        <p mat-line>
+          {{ flight.dep_date }} - {{ flight.arr_date }}
+        </p>
+        <div style="margin-right: 10px">
+          ${{ flight.price }}
+        </div>
+        <a mat-button (click)="onBooking(flight.id)" routerLinkActive="mat-accent">
+          <mat-icon>add_shopping_cart</mat-icon> book
+        </a>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </cdk-virtual-scroll-viewport>
+  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="flights.length > 0"></mat-paginator>
+  <p class="info-text mat-body-1" *ngIf="flights.length <= 0 && !isLoading">No flights found!</p>
+</div>
+
+<!-- todo: separate in two different components -->
+<div *ngIf="this.flightsService.flight.trip === 'Round Trip'">
+  <mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
+  <cdk-virtual-scroll-viewport itemSize="origin.length" class="example-viewport" *ngIf="!isLoading">
+    <mat-list multi="true" *ngIf="origin.length > 0">
+      <mat-list-item *ngFor="let flight of origin">
           <div mat-line>
             <mat-icon mat-list-icon>flight_takeoff</mat-icon>
             <b style="margin-left: 5px">{{ flight.departure }} - {{ flight.arrival }}</b>
@@ -10,15 +40,36 @@
           <p mat-line>
             {{ flight.dep_date }} - {{ flight.arr_date }}
           </p>
+          <mat-divider></mat-divider>
           <div style="margin-right: 10px">
             ${{ flight.price }}
           </div>
-          <a mat-button (click)="onBooking(flight.id)"  routerLinkActive="mat-accent">
+          <mat-divider></mat-divider>
+          <a mat-button (click)="onBooking(flight.id)" routerLinkActive="mat-accent">
             <mat-icon>add_shopping_cart</mat-icon> book
           </a>
+      </mat-list-item>
+      <mat-list-item *ngFor="let flight of destination">
+          <div mat-line>
+            <mat-icon mat-list-icon>flight_takeoff</mat-icon>
+            <b style="margin-left: 5px">{{ flight.departure }} - {{ flight.arrival }}</b>
+            {{ flight.dep_time }}-{{ flight.arr_time }}
+          </div>
+          <p mat-line>
+            {{ flight.dep_date }} - {{ flight.arr_date }}
+          </p>
           <mat-divider></mat-divider>
+          <div style="margin-right: 10px">
+            ${{ flight.price }}
+          </div>
+          <mat-divider></mat-divider>
+          <a mat-button (click)="onBooking(flight.id)" routerLinkActive="mat-accent">
+            <mat-icon>add_shopping_cart</mat-icon> book
+          </a>
       </mat-list-item>
     </mat-list>
   </cdk-virtual-scroll-viewport>
-  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="flights.length > 0"></mat-paginator>
-  <p class="info-text mat-body-1" *ngIf="flights.length <= 0 && !isLoading">No flights found!</p>
+  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="origin.length > 0"></mat-paginator>
+  <p class="info-text mat-body-1" *ngIf="origin.length <= 0 && !isLoading">No flights found!</p>
+</div>

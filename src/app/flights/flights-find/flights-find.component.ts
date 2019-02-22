@@ -35,7 +35,7 @@ import * as data from '../../../assets/data/airports.json';
 })
 export class FlightsFindComponent implements OnInit, OnDestroy {
     currentState = '';
-    flight: FlightFind; 
+    flight: FlightFind;
     trip_input = 'One Way'; // default to one way
     departure_input = '';
     arrival_input = '';
