@@ -11,26 +11,30 @@ import { FlightsListComponent } from './flights/flights-list/flights-list.compon
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { BookingComponent } from './booking/booking.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule,
-    MatButtonModule,
-    MatNativeDateModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatPaginatorModule
+        MatBadgeModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatDividerModule,
+        MatListModule,
+        MatInputModule,
+        MatButtonModule,
+        MatNativeDateModule,
+        MatToolbarModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatIconModule,
 } from '@angular/material';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { routingModule } from './app-routing.module';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatIconModule } from '@angular/material/icon';
+import { AppRoutingModule } from './app-routing.module';
+
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AuthInterceptor } from './auth/auth-interceptor';
 
@@ -42,11 +46,13 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     FlightsListComponent,
     LoginComponent,
     SignupComponent,
+    BookingComponent,
+    AboutusComponent,
   ],
   imports: [
     BrowserModule,
-    routingModule,
     FormsModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -57,6 +63,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatToolbarModule,
     MatExpansionModule,
     MatPaginatorModule,
+    MatBadgeModule,
     MatSelectModule,
     MatAutocompleteModule,
     HttpClientModule,

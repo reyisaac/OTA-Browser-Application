@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserData } from './user-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { FlightList } from '../flights/flight-list.model';
 
 
 @Injectable({ providedIn: 'root'})
@@ -12,6 +13,7 @@ export class AuthService {
     private authStatusListener = new Subject<boolean>();
     public first_name = '';
     public last_name = '';
+    public flightsToBook: FlightList[] = [];
     private tokenTimer: any;
 
     constructor(private http: HttpClient, private router: Router) {}
@@ -77,10 +79,10 @@ export class AuthService {
         const expiresIn = authInformation.expiration.getTime() - now.getTime();
         if (expiresIn > 0) {
             this.token = authInformation.token;
+            this.isAuthenticated = true;
             this.first_name = authInformation.first_name;
             this.last_name = authInformation.last_name;
-            this.isAuthenticated = true;
-            this.setAuthTimer(expiresIn);
+            this.setAuthTimer(expiresIn / 1000);
             this.authStatusListener.next(true);
         }
     }

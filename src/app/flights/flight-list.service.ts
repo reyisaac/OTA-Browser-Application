@@ -4,18 +4,25 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { FlightFind } from './flight-find.model';
 import { FlightList } from './flight-list.model';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class FlightListService {
   private flights: FlightList[] = [];
   private flightsUpdated = new Subject<{ flights: FlightList[], flightCount: number}>();
+  private flightsToBookCount = new Subject<{ flightToUpdateCount: number }>();
+  public flightsToBook: FlightList[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   public flight: FlightFind;
 
   getFlightUpdateListener() {
     return this.flightsUpdated.asObservable();
+  }
+
+  getFlightToBookUpdateListener() {
+    return this.flightsToBookCount.asObservable();
   }
 
   searchFlight(flightsPerPage: number, currentPage: number) {
@@ -58,5 +65,13 @@ export class FlightListService {
         flightCount: transformedFlightData.maxFlights
       });
     });
+  }
+
+  addToCart(id: any) {
+    this.flightsToBook.push(this.flights.find(x => x.id === id));
+    this.flightsToBookCount.next(
+      { flightToUpdateCount: this.flightsToBook.length }
+    );
+    console.log(this.flightsToBook);
   }
 }

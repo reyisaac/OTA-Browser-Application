@@ -6,6 +6,7 @@ import { OnDestroy, OnInit } from '@angular/core';
 import { FlightList } from '../flight-list.model';
 import { FlightListService } from '../flight-list.service';
 import { FlightFind } from '../flight-find.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flights-list',
@@ -23,13 +24,14 @@ export class FlightsListComponent implements OnInit, OnDestroy {
     flights: FlightList[] = [];
     private flightsSub: Subscription;
 
-    constructor(public flightsService: FlightListService) {}
+    constructor(public flightsService: FlightListService, private router: Router) {}
 
     ngOnInit() {
-      this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
       this.isLoading = true;
+      this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
+
       this.flightsSub = this.flightsService.getFlightUpdateListener()
-        .subscribe((flightData: {flights: FlightList[], flightCount: number}) => {
+        .subscribe((flightData: {flights: FlightList[], flightCount: number, }) => {
           this.isLoading = false;
           this.flights = flightData.flights;
           this.totalFlights = flightData.flightCount;
@@ -45,5 +47,10 @@ export class FlightsListComponent implements OnInit, OnDestroy {
       this.currentPage = pageData.pageIndex + 1;
       this.flightsPerPage = pageData.pageSize;
       this.flightsService.searchFlight(this.flightsPerPage, this.currentPage);
+    }
+
+    onBooking(id: any) {
+      this.flightsService.addToCart(id);
+      setTimeout(() => this.router.navigate(['/booking']), 200);
     }
 }

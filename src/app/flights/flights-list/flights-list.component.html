@@ -13,9 +13,12 @@
           <div style="margin-right: 10px">
             ${{ flight.price }}
           </div>
-          <button matTooltip="Book this trip" matTooltipPosition="above" mat-flat-button color="primary" style="float: right; width: 10px; border-radius: 50px;"><mat-icon mat-list-icon>add_shopping_cart</mat-icon></button>
+          <a mat-button (click)="onBooking(flight.id)"  routerLinkActive="mat-accent">
+            <mat-icon>add_shopping_cart</mat-icon> book
+          </a>
           <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>
   </cdk-virtual-scroll-viewport>
-  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="!isLoading"></mat-paginator>
+  <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="flights.length > 0"></mat-paginator>
+  <p class="info-text mat-body-1" *ngIf="flights.length <= 0 && !isLoading">No flights found!</p>

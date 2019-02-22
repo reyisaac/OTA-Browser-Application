@@ -35,8 +35,8 @@ import * as data from '../../../assets/data/airports.json';
 })
 export class FlightsFindComponent implements OnInit, OnDestroy {
     currentState = '';
-    flight: FlightFind; // default to round trip
-    trip_input = 'Round Trip';
+    flight: FlightFind; 
+    trip_input = 'One Way'; // default to one way
     departure_input = '';
     arrival_input = '';
     departure_date_input = '';
@@ -93,21 +93,6 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             }
         }
 
-        // checking input form
-        if (this.trip_input === 'Round Trip') {
-            if (this.departure_date_input === '' || this.departure_input === '' ||
-                this.arrival_date_input === '' || this.arrival_input === '') {
-                    this.error = true;
-                return;
-            }
-        } else {
-            if (this.departure_date_input === '' || this.departure_input === '' || this.arrival_input === '') {
-                this.error = true;
-                return;
-            }
-        }
-
-        this.currentState = 'final';
         this.flight = {
             id: null,
             departure: this.departure_input,
@@ -117,7 +102,7 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             class: this.class_input,
             trip: this.trip_input
         };
-
+        this.currentState = 'final';
         setTimeout(() => this.router.navigate(['/flights']), 300);
     }
 
