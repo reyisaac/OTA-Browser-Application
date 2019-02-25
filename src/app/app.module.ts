@@ -7,7 +7,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FlightsFindComponent } from './flights/flights-find/flights-find.component';
-import { FlightsListComponent } from './flights/flights-list/flights-list.component';
+import { RoundTripComponent } from './flights/flights-list/round-trip/round-trip.component';
+import { OneWayComponent } from './flights/flights-list/one-way/one-way.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
@@ -43,11 +44,12 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     AppComponent,
     FlightsFindComponent,
     NavbarComponent,
-    FlightsListComponent,
+    RoundTripComponent,
     LoginComponent,
     SignupComponent,
     BookingComponent,
     AboutusComponent,
+    OneWayComponent
   ],
   imports: [
     BrowserModule,

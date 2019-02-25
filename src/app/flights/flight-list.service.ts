@@ -21,8 +21,7 @@ export class FlightListService {
 
   constructor(private http: HttpClient) {}
 
-
-
+  
   getFlightUpdateListener() {
     return this.flightsUpdated.asObservable();
   }
@@ -138,10 +137,26 @@ export class FlightListService {
   }
 
   addToCart(id: any) {
-    this.flightsToBook.push(this.flights.find(x => x.id === id));
-    this.flightsToBookCount.next(
-      { flightToUpdateCount: this.flightsToBook.length }
-    );
-    console.log(this.flightsToBook);
+    if (this.flights.find(x => x.id === id)) {
+      this.flightsToBook.push(this.flights.find(x => x.id === id));
+      this.flightsToBookCount.next(
+        { flightToUpdateCount: this.flightsToBook.length }
+      );
+      console.log(this.flightsToBook);
+    }
+    if (this.origin.find(x => x.id === id)) {
+      this.flightsToBook.push(this.origin.find(x => x.id === id));
+      this.flightsToBookCount.next(
+        { flightToUpdateCount: this.flightsToBook.length }
+      );
+      console.log(this.flightsToBook);
+    }
+    if (this.destination.find(x => x.id === id)) {
+      this.flightsToBook.push(this.destination.find(x => x.id === id));
+      this.flightsToBookCount.next(
+        { flightToUpdateCount: this.flightsToBook.length }
+      );
+      console.log(this.flightsToBook);
+    }
   }
 }

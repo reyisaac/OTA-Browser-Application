@@ -24,12 +24,7 @@ import * as data from '../../../assets/data/airports.json';
                 opacity: 1,
                 transform: 'translateY(0%)'
             })),
-            state('final', style({
-                opacity: 0,
-                transform: 'translateY(-5%)'
-            })),
             transition('initial=>normal', animate('300ms')),
-            transition('normal=>final', animate('300ms'))
           ]),
     ]
 })
@@ -102,8 +97,14 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
             class: this.class_input,
             trip: this.trip_input
         };
-        this.currentState = 'final';
-        setTimeout(() => this.router.navigate(['/flights']), 300);
+
+        if (this.flight.arr_date === '') {
+            this.router.navigate(['/flights/one-way']);
+            return;
+        } else {
+            this.router.navigate(['/flights/round-trip']);
+            return;
+        }
     }
 
     onChangeTrip() {

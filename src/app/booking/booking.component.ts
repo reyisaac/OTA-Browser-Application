@@ -9,11 +9,15 @@ import { FlightList } from '../flights/flight-list.model';
 })
 export class BookingComponent implements OnInit {
   flights: FlightList[] = [];
+  totalCost = 0;
 
   constructor(private flightService: FlightListService) { }
 
   ngOnInit() {
     this.flights = this.flightService.flightsToBook;
+    this.flights.forEach(flight => {
+      this.totalCost += +flight.price;
+    });
   }
 
 }

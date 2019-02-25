@@ -16,7 +16,10 @@
           </div>
           <mat-divider></mat-divider>
       </mat-list-item>
+      
     </mat-list>
+    <h4 style="float: right">Total: ${{totalCost}}</h4>
+    <br>
     <a  *ngIf="flights.length > 0" mat-flat-button routerLinkActive="mat-accent" style="float: right">
         Book Flights
     </a>
