@@ -159,4 +159,14 @@ export class FlightListService {
       console.log(this.flightsToBook);
     }
   }
+  removeFromCart(id: any) {
+    // get index of object with id
+    const removeIndex = this.flightsToBook.map(function(item) { return item.id; }).indexOf(id);
+
+    // remove object
+    this.flightsToBook.splice(removeIndex, 1);
+    this.flightsToBookCount.next(
+      { flightToUpdateCount: this.flightsToBook.length }
+    );
+  }
 }

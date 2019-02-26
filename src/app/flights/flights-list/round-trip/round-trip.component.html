@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
-<cdk-virtual-scroll-viewport itemSize="origin.length" class="example-viewport" *ngIf="!isLoading">
+<mat-card class="example-viewport" *ngIf="!isLoading">
     <mat-list multi="true" *ngIf="origin.length > 0">
         <mat-list-item *ngFor="let flight of origin; let i = index">
             <div mat-line>
@@ -29,7 +29,7 @@
             </a>
         </mat-list-item>
     </mat-list>
-</cdk-virtual-scroll-viewport>
-<mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    <mat-paginator [length]="totalFlights" [pageSize]="flightsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
     *ngIf="origin.length > 0"></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="origin.length <= 0 && !isLoading">No flights found!</p>
+    <p class="info-text mat-body-1" *ngIf="origin.length <= 0 && !isLoading">No flights found!</p>
+</mat-card>

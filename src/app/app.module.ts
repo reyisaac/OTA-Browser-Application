@@ -32,11 +32,11 @@ import { MatCardModule,
         MatProgressSpinnerModule,
         MatRadioModule,
         MatIconModule,
+        MatGridListModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
@@ -75,7 +75,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatListModule,
     MatDividerModule,
     MatTooltipModule,
-    ScrollingModule,
+    MatGridListModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

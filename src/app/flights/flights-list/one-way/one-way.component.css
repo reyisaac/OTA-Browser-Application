@@ -21,11 +21,10 @@ mat-paginator {
 }
 
 .example-viewport {
-    margin-top: 70px;
+    margin-top: 65px;
     margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
-    height: 80vh;
     width: 800px;
     border: 0px solid black;
     background-color: rgb(255, 255, 255);

@@ -1,5 +1,5 @@
 
-  <cdk-virtual-scroll-viewport itemSize="flights.length" class="example-viewport">
+  <mat-card class="example-viewport">
     <mat-list multi="true" *ngIf="flights.length > 0">
       <mat-list-item><h3>Your Itinerary</h3></mat-list-item>
       <mat-list-item *ngFor="let flight of flights">
@@ -14,14 +14,16 @@
           <div style="margin-right: 10px">
             ${{ flight.price }}
           </div>
+          <a mat-button (click)="onRemoveFromCart(flight.id)" routerLinkActive="mat-accent">
+            <mat-icon>remove_shopping_cart</mat-icon>
+          </a>
           <mat-divider></mat-divider>
       </mat-list-item>
-      
+      <mat-list-item><div>Total: ${{totalCost}}</div></mat-list-item>
     </mat-list>
-    <h4 style="float: right">Total: ${{totalCost}}</h4>
     <br>
-    <a  *ngIf="flights.length > 0" mat-flat-button routerLinkActive="mat-accent" style="float: right">
+    <a  *ngIf="flights.length > 0" mat-button routerLinkActive="mat-accent" style="float: right">
         Book Flights
     </a>
     <mat-list multi="true" *ngIf="flights.length === 0"><mat-list-item><h3>No flight</h3></mat-list-item></mat-list>
-  </cdk-virtual-scroll-viewport>
+  </mat-card>
