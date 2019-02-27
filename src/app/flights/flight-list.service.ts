@@ -21,7 +21,7 @@ export class FlightListService {
 
   constructor(private http: HttpClient) {}
 
-  
+
   getFlightUpdateListener() {
     return this.flightsUpdated.asObservable();
   }
