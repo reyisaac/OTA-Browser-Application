@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FlightFind } from './flight-find.model';
 import { FlightList } from './flight-list.model';
-import { map } from 'rxjs/operators';
+import { map,  } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 
 @Injectable({providedIn: 'root'})
 export class FlightListService {
   private flights: FlightList[] = [];
-
   // for round trip
   private origin: FlightList[] = [];
   private destination: FlightList[] = [];
@@ -17,6 +17,10 @@ export class FlightListService {
   private roundTripUpdated = new Subject<{ origin: FlightList[], destination: FlightList[], flightCount: number}>();
   private flightsToBookCount = new Subject<{ flightToUpdateCount: number }>();
   public flightsToBook: FlightList[] = [];
+
+  // cached flights
+  public cachedFlights: any = [];
+
   public flight: FlightFind;
 
   constructor(private http: HttpClient) {}
@@ -33,6 +37,8 @@ export class FlightListService {
   }
 
   searchOneWayFlight(flightsPerPage: number, currentPage: number) {
+    const now = new Date();
+
     const  params = new  HttpParams()
       .set('id', null)
       .set('departure', this.flight.departure)
@@ -44,34 +50,46 @@ export class FlightListService {
       .set('pagesize', String(flightsPerPage))
       .set('page', String(currentPage));
 
-    this.http
-      .get<{message: string, flights: any, maxFlights: number}>('http://localhost:3000/api/flights/oneway', { params })
-      .pipe(map((flightData) => {
-        return { flights: flightData.flights.map(flight => {
-          return {
-            departure: flight.departure,
-            arrival: flight.arrival,
-            dep_date: flight.dep_date,
-            arr_date: flight.arr_date,
-            dep_time: flight.dep_time,
-            arr_time: flight.arr_time,
-            class: flight.class,
-            price: flight.price,
-            airline: flight.airline,
-            id: flight._id,
-          };
-        }),
-        maxFlights: flightData.maxFlights
-      };
-      })
-    )
-    .subscribe((transformedFlightData) => {
-      this.flights = transformedFlightData.flights;
-      this.flightsUpdated.next({
-        flights: [...this.flights],
-        flightCount: transformedFlightData.maxFlights
+    if (!this.isCached()) {
+          // GET
+        this.http
+        .get<{message: string, flights: any, maxFlights: number}>('http://localhost:3000/api/flights/oneway', { params })
+        .pipe(map((flightData) => {
+          return { flights: flightData.flights.map(flight => {
+            return {
+              departure: flight.departure,
+              arrival: flight.arrival,
+              dep_date: flight.dep_date,
+              arr_date: flight.arr_date,
+              dep_time: flight.dep_time,
+              arr_time: flight.arr_time,
+              class: flight.class,
+              price: flight.price,
+              airline: flight.airline,
+              id: flight.id,
+            };
+          }),
+          maxFlights: flightData.maxFlights
+        };
+        })
+      )
+      .subscribe( transformedFlightData => {
+        this.cachedFlights.push({
+          id: uuid(),
+          departure: this.flight.departure,
+          arrival: this.flight.arrival,
+          dep_date: this.flight.dep_date,
+          flightList: transformedFlightData.flights,
+          expirationTime: new Date(now.getTime() + 1200 * 1000)
+        });
+        console.log(this.cachedFlights);
+        this.flights = transformedFlightData.flights;
+        this.flightsUpdated.next({
+          flights: [...this.flights],
+          flightCount: transformedFlightData.maxFlights
+        });
       });
-    });
+    }
   }
 
   searchRoundTripFlight(flightsPerPage: number, currentPage: number) {
@@ -168,5 +186,25 @@ export class FlightListService {
     this.flightsToBookCount.next(
       { flightToUpdateCount: this.flightsToBook.length }
     );
+  }
+
+  isCached() {
+    let isCached = false;
+    // if cached Flights is empty.
+    if (this.cachedFlights === undefined || this.cachedFlights.length === 0) {
+      return false;
+    }
+
+    // if same dep_date, dep, arr.
+    this.cachedFlights.forEach(query => {
+      // TODO: not working
+      isCached = (query.departure === this.flight.departure && query.arrival === this.flight.arrival
+        && query.dep_date === this.flight.dep_date);
+      console.log(isCached);
+      if (isCached) {
+        return true;
+      }
+    });
+    return isCached;
   }
 }
