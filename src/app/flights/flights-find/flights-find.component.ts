@@ -57,11 +57,12 @@ export class FlightsFindComponent implements OnInit, OnDestroy {
                 this.airports.push(data.default.iata[key]);
             }
         }
-        this.filteredOptions = this.myControl.valueChanges
-        .pipe(
-            startWith(''),
-            map(value => value.length >= 3 ? this._filter(value) : [])
-        );
+        setTimeout(() =>
+            this.filteredOptions = this.myControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => value.length >= 3 ? this._filter(value) : []))
+        , 100);
     }
 
     private _filter(value: string): string[] {

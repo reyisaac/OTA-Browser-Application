@@ -31,14 +31,18 @@ export class OneWayComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isLoading = true;
-        this.flightsService.searchOneWayFlight(this.flightsPerPage, this.currentPage);
-        this.flightsSub = this.flightsService
-        .getFlightUpdateListener()
-        .subscribe((flightData: {flights: FlightList[], flightCount: number, }) => {
-          this.isLoading = false;
-          this.flights = flightData.flights;
-          this.totalFlights = flightData.flightCount;
-        });
+        if (this.flightsService.isCached()) {
+            this.flights = this.flightsService.useCachedFlights();
+        } else {
+            this.flightsService.searchOneWayFlight(this.flightsPerPage, this.currentPage);
+            this.flightsSub = this.flightsService
+            .getFlightUpdateListener()
+            .subscribe((flightData: {flights: FlightList[], flightCount: number, }) => {
+            this.isLoading = false;
+            this.flights = flightData.flights;
+            this.totalFlights = flightData.flightCount;
+            });
+        }
     }
 
     ngOnDestroy() {
