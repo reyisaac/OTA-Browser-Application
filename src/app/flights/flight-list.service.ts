@@ -36,7 +36,6 @@ export class FlightListService {
     return this.flightsToBookCount.asObservable();
   }
 
-  // https://blog.thoughtram.io/angular/2018/03/05/advanced-caching-with-rxjs.html check this tut for tmw
   searchOneWayFlight(flightsPerPage: number, currentPage: number) {
     const  params = new  HttpParams()
       .set('id', null)
@@ -46,8 +45,6 @@ export class FlightListService {
       .set('arr_date', this.flight.arr_date)
       .set('class', this.flight.class)
       .set('trip', this.flight.trip)
-      .set('pagesize', String(flightsPerPage))
-      .set('page', String(currentPage));
 
     this.http
       .get<{message: string, flights: any, maxFlights: number}>('http://localhost:3000/api/flights/oneway', { params })
@@ -70,8 +67,8 @@ export class FlightListService {
       };
       }))
       .subscribe( transformedFlightData => {
-        this.addFlightsToCache(transformedFlightData.flights);
-        console.log(this.cachedFlights);
+        // this.addFlightsToCache(transformedFlightData.flights);
+        //console.log(this.cachedFlights);
         this.flights = transformedFlightData.flights;
         this.flightsUpdated.next({
           flights: [...this.flights],
@@ -79,7 +76,6 @@ export class FlightListService {
         });
       });
   }
-
   searchRoundTripFlight(flightsPerPage: number, currentPage: number) {
     const  params = new  HttpParams()
       .set('id', null)
@@ -89,12 +85,11 @@ export class FlightListService {
       .set('arr_date', this.flight.arr_date)
       .set('class', this.flight.class)
       .set('trip', this.flight.trip)
-      .set('pagesize', String(flightsPerPage))
-      .set('page', String(currentPage));
 
     this.http
       .get<{message: string, origin: any, destination: any, maxFlights: number}>('http://localhost:3000/api/flights/roundtrip', { params })
       .pipe(map((flightData) => {
+        console.log(flightData);
         return {
           origin: flightData.origin
           .map(flightorigin => {
