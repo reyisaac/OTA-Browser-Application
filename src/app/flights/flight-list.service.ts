@@ -44,7 +44,7 @@ export class FlightListService {
       .set('dep_date', this.flight.dep_date)
       .set('arr_date', this.flight.arr_date)
       .set('class', this.flight.class)
-      .set('trip', this.flight.trip)
+      .set('trip', this.flight.trip);
 
     this.http
       .get<{message: string, flights: any, maxFlights: number}>('http://localhost:3000/api/flights/oneway', { params })
@@ -68,14 +68,14 @@ export class FlightListService {
       }))
       .subscribe( transformedFlightData => {
         // this.addFlightsToCache(transformedFlightData.flights);
-        //console.log(this.cachedFlights);
+        // console.log(this.cachedFlights);
         this.flights = transformedFlightData.flights;
         this.flightsUpdated.next({
           flights: [...this.flights],
           flightCount: transformedFlightData.maxFlights
         });
       });
-  }
+  } 
   searchRoundTripFlight(flightsPerPage: number, currentPage: number) {
     const  params = new  HttpParams()
       .set('id', null)
@@ -84,7 +84,7 @@ export class FlightListService {
       .set('dep_date', this.flight.dep_date)
       .set('arr_date', this.flight.arr_date)
       .set('class', this.flight.class)
-      .set('trip', this.flight.trip)
+      .set('trip', this.flight.trip);
 
     this.http
       .get<{message: string, origin: any, destination: any, maxFlights: number}>('http://localhost:3000/api/flights/roundtrip', { params })

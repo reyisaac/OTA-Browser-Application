@@ -3,6 +3,7 @@
     <mat-list multi="true" *ngIf="origin.length > 0">
         <mat-list-item *ngFor="let flight of origin; let i = index">
             <div mat-line>
+                {{ flight.airline }}
                 <mat-icon mat-list-icon>flight_takeoff</mat-icon>
                 <b style="margin-left: 5px">{{ flight.departure }} - {{ flight.arrival }}</b>
                 {{ flight.dep_time }}-{{ flight.arr_time }}
